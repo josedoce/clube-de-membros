@@ -1,0 +1,35 @@
+@layout('layouts/app')
+@set('titulo', 'Meu app AdonisJS')
+@section('body')
+  <style>
+    .ferramentas{
+      color: #0d6efd;
+    }
+  </style>
+  <h1>Nomes cadastrados</h1>
+  <div class="card" style="padding: 10px">
+    <p>Nesta pequena aplicação, crio um crud, para aprender um pouco sobre o <strong>AdonisJS</strong></p>
+    <p>Ferramentas:
+      <br>
+      <strong class="ferramentas">TypeScript</strong>
+      <br>
+      <strong class="ferramentas">Bootstrap</strong>
+      <br>
+      <strong class="ferramentas">VueJS</strong>
+    </p>
+    <a class="link-info" href="https://github.com/josedoce"><strong>github</strong></a>
+    <p>Funcionalidade: mostrar tudo, mostrar um, criar um, atualizar um, deletar um, apagar um.</p>
+    <div class="card-footer">
+      <a class="link-info" href="/create"><strong>criar</strong></a>
+      <a class="link-danger" href="/delete"><strong>listar</strong></a>
+    </div>
+  </div>
+  <ul style="list-style: none">
+    @each(pessoa in pessoas)
+      <li><strong>{{pessoa.nome}}</strong> tem <strong>{{pessoa.idade}}</strong> anos</li>
+    @endeach
+  </ul>
+  <script>
+    localStorage.setItem('logado',{{{stringify(logado)}}})
+  </script>          
+@end

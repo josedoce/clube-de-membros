@@ -1,0 +1,19 @@
+@layout('layouts/app')
+@set('titulo', 'Criar | Meu app AdonisJS')
+
+@section('body')
+<h1>Adicionar nome ao banco de dados</h1>
+<form action="{{ route('store.save') }}" method="POST">
+    <div class="row">
+        <div class="col">
+            <input type="text" name="nome" class="form-control" placeholder="nome"/>
+        </div>
+        <div class="col">
+            <input type="number" name="idade" class="form-control" placeholder="idade"/>
+        </div>
+    </div>
+    <div class="row p-4">
+        <button type="submit" class="btn-primary mt-3 form-control">cadastrar</button>
+    </div>
+</form>  
+@end

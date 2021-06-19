@@ -1,0 +1,80 @@
+@layout('layouts/app')
+@set('titulo', 'deletar autor')
+
+@section('body')
+  <h1>Membros cadastrados</h1>
+<div id="funcionalidade">
+  <form id="formulario" method="POST">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">nome</th>
+          <th scope="col">idade</th>
+          <th scope="col">acao</th>
+        </tr>
+      </thead>
+      <tbody>
+        @each(pessoa in pessoas)
+          <tr>
+            <th scope="row">{{pessoa.id}}</th>
+            <td>{{pessoa.nome}}</td>
+            <td>{{pessoa.idade}}</td>
+            <td>
+              <button v-on:click="setDados({{stringify(pessoa)}})" type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                editar
+              </button>
+              <button type="submit" v-on:click="deletar('{{pessoa.id}}')" class="btn btn-primary btn-sm">deletar</button>
+            </td>
+          </tr>
+        @endeach
+      </tbody>
+    </table>
+  </form>
+  <form id="formulario2" method="POST">
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="id" :value="usuario.id">
+            <label for="ipt1" class="form-label">Nome</label>
+            <input id="ipt1" type="text" name="nome" :value="usuario.nome" class="form-control mb-2" placeholder="nome"/>
+            <label for="ipt2" class="form-label">Idade</label>
+            <input id="ipt2" type="number" name="idade" :value="usuario.idade" class="form-control" placeholder="idade"/>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" v-on:click="atualizar(usuario.id)" class="btn btn-success">editar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+  const modelo = new Vue({
+    el: '#funcionalidade',
+    data: {
+      usuario: {}
+    },
+    methods: {
+      setDados: function(dados){
+        this.usuario = dados;
+      },
+      deletar: function(id){
+        let formulario = document.getElementById('formulario');
+        formulario.setAttribute('action',`/delete/${id}?_method=DELETE`);
+      },
+      atualizar: function(id){
+        let formulario = document.getElementById('formulario2');
+        formulario.setAttribute('action',`/update/${id}?_method=PUT`);
+      }
+    }
+  })
+</script>
+@end

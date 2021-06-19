@@ -1,0 +1,62 @@
+@layout('layouts/app')
+@set('titulo', 'Logar | Meu app AdonisJS')
+
+@section('body')
+<h1>Logar administrador</h1>
+<div id="formulario_de_usuario">
+    <form id="formulario3" method="POST">
+        <div class="row justify-content-center">
+            <div style="padding: 20% 0;" class="col-3">
+                <input type="text" name="email" class="form-control m-1" placeholder="email"/>
+                <input v-if="registrar" type="text" name="nome" class="form-control m-1" placeholder="nome"/>
+                <input v-if="registrar" type="number" name="idade" class="form-control m-1" placeholder="idade"/>
+                <input type="password" name="senha" class="form-control m-1" placeholder="senha"/>
+                <button :type="type" v-on:click="setRegistroForm" :class="'btn-'+estilo+'success m-1 mt-3 form-control'">registrar</button>
+                <button :type="type2" v-on:click="setLoginForm" :class="'btn-'+estilo2+'primary m-1 form-control'">logar</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    const app1 = new Vue({
+        el: '#formulario_de_usuario',
+        data: {
+            estilo: 'outline-',
+            estilo2: '',
+            registrar: false,
+            type: 'button',
+            type2: 'button'
+        },
+        mounted: function(){
+            this.type2 = 'submit';
+            document.getElementById('formulario3').setAttribute('action','/logar')
+        },
+        methods: {
+            setRegistroForm: function(){
+                if(!this.registrar){
+                    document.getElementById('formulario3').setAttribute('action','/criar/usuario')
+                    this.registrar = !this.registrar;
+                    this.estilo2 = this.estilo; 
+                    this.estilo = '';
+                    setTimeout(()=>{
+                        this.type = 'submit';
+                        this.type2 = 'button';
+                    }, 1000);
+                }
+            },
+            setLoginForm: function(){
+                if(this.registrar){
+                    document.getElementById('formulario3').setAttribute('action','/logar')
+                    this.registrar = !this.registrar;
+                    this.estilo = this.estilo2;
+                    this.estilo2 = ''; 
+                    setTimeout(()=>{
+                        this.type2 = 'submit';
+                        this.type = 'button';
+                    }, 1000);
+                }
+            }
+        }
+    })
+</script>  
+@end
